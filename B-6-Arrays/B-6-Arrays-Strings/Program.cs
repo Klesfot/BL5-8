@@ -66,22 +66,18 @@ namespace Base.Lesson_6
                                 {88,15,47} //20, 21, 22
             };
 
-            
-            int rowMax = arr[0,0];
-
             for (int i = 0; i < 3; i++)
             {
+                int rowMax = 0;
+
                 for (int j = 0; j < 3; j++)
                 {
-                    if ((i == 0 & j == 0) || (i == 1 & j == 0) || (i == 2 & j == 0))
-                        rowMax = arr[i,j];
-                    
                     if (arr[i,j] > rowMax)
                         rowMax = arr[i,j];
-                    
-                    if ((i == 0 && j == 2) || (i == 1 && j == 2) || (i == 2 && j == 2))
-                        Console.WriteLine("Max for row " + " " + (i + 1) + " " + " is: " + rowMax);
                 }
+
+                if ((i == 0) || (i == 1) || (i == 2))
+                    Console.WriteLine("Max for row " + " " + (i + 1) + " " + " is: " + rowMax);
             }
         }
         
@@ -130,7 +126,7 @@ namespace Base.Lesson_6
             string input = Console.ReadLine();
             int len = input.Length;
             
-            if (len > 13)
+            if (len > 14)
                 input = input.Remove(14);
             input = input.Insert(14, "...");
             
@@ -141,12 +137,8 @@ namespace Base.Lesson_6
         {
             Console.WriteLine("Please input a poem in one line, dividing each line of poem with a semicolon");
             string poem = Console.ReadLine();
-            poem = poem.Replace("о","а");
-            poem = poem.Replace("О","А");
-            poem = poem.Replace("л","ль");
-            poem = poem.Replace("Л","Ль");
-            poem = poem.Replace("ть","т");
-            poem = poem.Replace("Ть","Т");
+            poem = poem.Replace("о","а").Replace("л","ль").Replace("ть","т").Replace
+                               ("О","А").Replace("Л","Ль").Replace("Ть","Т");
 
             int len = poem.Length;
             Console.WriteLine();
