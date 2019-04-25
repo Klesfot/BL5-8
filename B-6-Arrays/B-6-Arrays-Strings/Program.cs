@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Console;
 
 namespace Base.Lesson_6
 {
@@ -14,25 +15,122 @@ namespace Base.Lesson_6
             //MassiveMaxInRow();
             //MassiveSort();
             //CutString();
-            ReplaceInPoem(); 
+            //ReplaceInPoem();
+            Pyatnashki();
             Console.ReadLine();
         }
 
         public static void Pyatnashki()
         {
-            int[,] arr = new int[3, 3];
-            printarr(arr);
+            int[,] arr = new int[4, 4];
             initarr(arr);
             Console.WriteLine();
+            Console.WriteLine("Controls: W - up, S - Down, A - Left, D - Right");
             printarr(arr);
+            int x,y;
+
+            while (true)
+            {
+                switch (ReadLine())
+                {
+                    case "w":
+                    {
+                        x = zeroXpos(arr);
+                        y = zeroYpos(arr);
+
+                        arr[x,y] = arr[x-1,y];
+                        arr[x-1,y] = 0;
+                                
+                        Console.Clear();
+                        printarr(arr);
+                        break;
+                    }
+
+                    case "s":
+                    {
+                        x = zeroXpos(arr);
+                        y = zeroYpos(arr);
+                        
+                        arr[x,y] = arr[x+1,y];
+                        arr[x+1,y] = 0;
+                                
+                        Console.Clear();
+                        printarr(arr);
+                        break;
+                    }
+
+                    case "a":
+                    {
+                        x = zeroXpos(arr);
+                        y = zeroYpos(arr);
+                        
+                        arr[x,y] = arr[x,y-1];
+                        arr[x,y-1] = 0;
+                                
+                        Console.Clear();
+                        printarr(arr);
+                        break;
+                    }
+
+                    case "d":
+                    {
+                        x = zeroXpos(arr);
+                        y = zeroYpos(arr);
+                        
+                        arr[x,y] = arr[x,y+1];
+                        arr[x,y+1] = 0;
+                                
+                        Console.Clear();
+                        printarr(arr);
+                        break;
+                    }
+                }
+            }
 
         }
 
+
+        private static int zeroXpos(int[,] arr)
+        {
+            int zeroxpos = 0;
+            for (int x = 0; x < 4; x++)
+            {
+                for (int y = 0; y < 4; y++)
+                {
+                    if (arr[x,y] == 0)
+                    {
+                        zeroxpos = x;
+                        return zeroxpos;
+                    }
+                }
+            }
+            return 0;
+        }
+
+
+        private static int zeroYpos(int[,] arr)
+        {
+            int zeroypos = 0;
+            for (int x = 0; x < 4; x++)
+            {
+                for (int y = 0; y < 4; y++)
+                {
+                    if (arr[x,y] == 0)
+                    {
+                        zeroypos = y;
+                        return zeroypos;
+                    }
+                }
+            }
+            return 0;
+        }
+
+
         private static void printarr(int[,] arr)
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < 4; j++)
                 {
 
                 Console.Write($"{arr[i,j]} ");
@@ -45,13 +143,29 @@ namespace Base.Lesson_6
         static Random rand = new Random();
         private static void initarr(int[,] arr)
         {
-            for (int i = 0; i < 3; i++)
-            {
+            
+            int[,] normalArr = new int[4,4]
+            {                         {1,2,3,4},
+                                      {5,6,7,8},
+                                      {9,10,11,12},
+                                      {13,14,15,0}
+            };
 
-                for (int j = 0; j < 3; j++)
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
                 {
-                    arr[i, j] = rand.Next(10);
-                    
+                    //control goes here if the variable in normal array under the index of [r1,r2] equals 88 
+                    //the point of doing so is to prevent collisions between the elements of target array
+                    sameInt: 
+                    int r1 = rand.Next(4);
+                    int r2 = rand.Next(4);
+                    if (normalArr[r1,r2] != 88)
+                    {
+                        arr[i,j] = normalArr[r1, r2];
+                        normalArr[r1, r2] = 88;
+                    }
+                    else goto sameInt;
                 }
                 
             }
